@@ -1,0 +1,109 @@
+# -------------------------------------------------------------------
+
+aeroway=airport | amenity=airport | aeroway=aerodrome [0x2f04 resolution 22]
+aeroway=helipad [0x5904 resolution 23]
+aeroway=terminal [0x2f04 resolution 24]
+
+# Misc amenity
+amenity=bank | atm=yes { name '${name} (${operator})' | '${name}' | '${operator}' } [0x2f06 resolution 24]
+
+amenity=bar | amenity=pub | amenity=cafe [0x2d02 resolution 24]
+amenity=nightclub [0x2d02 resolution 24]
+
+amenity=border_control | barrier=border_control [0x3006 resolution 16]
+amenity=police [0x3001 resolution 16]
+amenity=post_office [0x2f05 resolution 24]
+amenity=prison [0x3007 resolution 24]
+
+amenity=drinking_water [0x5000 resolution 24 default_name 'Water']
+
+amenity=embassy & country=* { name '${country} ${name|def:}' } [0x3003 resolution 24]
+amenity=embassy & country!=* [0x3003 resolution 24 default_name 'Embassy']
+amenity=public_building | amenity=townhall [0x3007 resolution 24]
+
+amenity=place_of_worship [0x2c0b resolution 16]
+
+# Fuel
+amenity=fuel { name '${operator}' | '${operator}' | '${operator}' } 
+amenity=fuel [0x2f16 resolution 24 continue]
+amenity=fuel [0x0044 resolution 16]
+
+amenity=parking [0x2f0b resolution 24 default_name 'Parking']
+amenity=nightclub [0x2d02 resolution 24]
+
+# Food
+amenity=fast_food [0x2a07 resolution 24]
+amenity=restaurant [0x2a00 resolution 24 continue]
+amenity=restaurant [0x0045 resolution 16]
+amenity=supermarket | shop=supermarket [0x2e02 resolution 24]
+shop=bakery [0x2e02 resolution 24]
+shop=butcher | shop=seafood | shop=doityourself | shop=organic [0x2e0c resolution 24]
+amenity=marketplace [0x2e03 resolution 16]
+
+# School
+amenity=school [0x2c05 resolution 16]
+amenity=college [0x2c05 resolution 24]
+amenity=kindergarten [0x2c05 resolution 24]
+
+# Misc
+tourism=hostel | tourism=hotel | tourism=motel { name '${name|def:}(${stars}*)${operator|def:}' | '${name} ${operator}' | '${name}' | '${operator}' } [0x2b01 resolution 24]
+barrier=toll_booth [0x0025 resolution 16]
+shop=car_repair [0x2f03 resolution 24]
+
+# Villages
+place=city [0x0400 resolution 17]
+place=hamlet [0x1100 resolution 20]
+place=suburb [0x0a00 resolution 20]
+place=town [0x0800 resolution 18]
+place=village [0x0b00 resolution 20]
+place=isolated_dwelling [0x6604 resolution 20]
+
+# Land use
+
+landuse=forest & name=* [0x6618 resolution 24]
+landuse=basin [0x650f resolution 24]
+landuse=cemetery | amenity=grave_yard [0x6403 resolution 18]
+landuse=military [0x640b resolution 24]
+landuse=reservoir [0x650f resolution 24]
+landuse=village_green & name=* [0x2c06 resolution 24]
+landuse=wood & name=* [0x6618 resolution 24]
+
+# Leisure & natural
+natural=beach [0x6604 resolution 24]
+natural=cave_entrance [0x6601 resolution 24]
+natural=cliff [0x6607 resolution 24]
+natural=glacier [0x650a resolution 24]
+natural=peak {name '${name|def:}${ele|height:m=>ft|def:}' } [0x6616 resolution 24]
+natural=rock [0x6614 resolution 24]
+natural=spring [0x6511 resolution 24]
+natural=stream [0x6512 resolution 24]
+natural=volcano [0x2c0c resolution 24]
+natural=water & name=* [0x6603 resolution 24]
+natural=waterfall | waterway=waterfall [0x6508 resolution 24]
+natural=wetland & name=* [0x6513 resolution 24]
+natural=wood & name=* [0x6618 resolution 24]
+
+tourism=wilderness_hut [0x2b07 resolution 16 default_name 'wilderness hut']
+tourism=viewpoint [0x004c resolution 16]
+
+information=guidepost | information=office | tourism=information [0x0026 resolution 16]
+
+leisure=park [0x2c06 resolution 24]
+
+# Sea
+waterway=dock [0x2f09 resolution 24]
+waterway=waterfall [0x6414 resolution 24]
+seamark=buoy [0x1c00 resolution 24]
+
+# Hospital
+healthcare=hospital | amenity=hospital [0x3002 resolution 22]
+healthcare=* | amenity=dentist | amenity=doctors [0x3002 resolution 24]
+
+# Sport
+leisure=golf_course [0x2d05 resolution 24]
+leisure=surf [0x0053 resolution 20]
+
+# Important points
+man_made=tower [0x6411 resolution 16]
+man_made=well [0x640d resolution 16]
+building=yes | man_made=works | landuse=industrial [0x0030 resolution 16]

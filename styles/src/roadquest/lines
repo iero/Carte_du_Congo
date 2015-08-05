@@ -1,0 +1,68 @@
+# -------------------------------------------------------------------
+# This is a mkgmap style file for converting OSM ways
+# into Garmin lines.
+# Any line prefaced with # is a comment and will not be applied.
+# Each line is a rule, of the generalised format:
+#  OSM_tag(s)_to_match  [Garmin_type_code resolution]
+# See http://wiki.openstreetmap.org/wiki/Mkgmap/help/style_rules
+# and http://wiki.openstreetmap.org/wiki/Mkgmap/help/Custom_styles
+# for more information.
+
+# Aeroways
+aeroway=runway [0x27 resolution 20]
+aeroway=taxiway [0x28 resolution 21]
+
+# Set highway symbols
+highway=motorway {name '${ref|highway-symbol:hbox}' }
+highway=trunk {name '${ref|highway-symbol:hbox}' }
+highway=primary {name '${ref|highway-symbol:box}' }
+highway=secondary {name '${ref|highway-symbol:oval}' }
+highway=* {name '${ref}' }
+
+# Roundabouts
+junction=roundabout & highway=trunk [0x0c road_class=3 road_speed=2 resolution 18]
+junction=roundabout & highway=primary [0x0c road_class=3 road_speed=2 resolution 18]
+junction=roundabout & highway=secondary [0x0c road_class=2 road_speed=2 resolution 20]
+junction=roundabout & highway=tertiary [0x0c road_class=1 road_speed=1 resolution 22]
+junction=roundabout & highway=unclassified [0x0c road_class=1 road_speed=1 resolution 22]
+junction=roundabout & highway=* [0x0c road_class=1 road_speed=1 resolution 22]
+
+# Ways sorted roughly
+highway=motorway {add oneway = yes} [0x01 road_class=4 road_speed=7 resolution 14]
+highway=motorway_link [0x01 road_class=3 road_speed=2 resolution 14]
+highway=trunk [0x02 road_class=4 road_speed=5 resolution 16]
+highway=trunk_link [0x02 road_class=3 road_speed=2 resolution 16]
+highway=* & motorroad=yes [0x02 road_class=4 road_speed=4 resolution 16]
+
+highway=primary [0x03 road_class=3 road_speed=4 resolution 18]
+highway=primary_link [0x03 road_class=3 road_speed=1 resolution 18]
+highway=secondary [0x04 road_class=2 road_speed=3 resolution 19]
+highway=secondary_link [0x04 road_class=2 road_speed=1 resolution 19]
+highway=tertiary [0x05 road_class=1 road_speed=3 resolution 20]
+highway=tertiary_link [0x05 road_class=1 road_speed=1 resolution 20]
+highway=unclassified | highway=minor [0x06 road_class=1 road_speed=3 resolution 22]
+highway=living_street [0x06 road_class=0 road_speed=1 resolution 22]
+highway=residential [0x06 road_class=0 road_speed=2 resolution 22]
+highway=service [0x06 road_class=0 road_speed=2 resolution 22]
+highway=road [0x00 road_class=0 road_speed=1 resolution 22]
+
+highway=pedestrian & area!=yes {add access = no; add bicycle = yes; add foot = yes} [0x16 road_class=0 road_speed=1 resolution 23]
+highway=bridleway {add access = no; add bicycle = yes; add foot = yes} [0x16 road_class=0 road_speed=0 resolution 23]
+highway=byway [0x16 road_class=0 road_speed=0 resolution 23]
+highway=cycleway {add access = no; add bicycle = yes; add foot = yes} [0x07 road_class=0 road_speed=1 resolution 23]
+highway=footway {add access = no; add foot = yes} [0x16 road_class=0 road_speed=0 resolution 23]
+highway=path {add access = no; add bicycle = yes; add foot = yes} [0x16 road_class=0 road_speed=1 resolution 23]
+highway=steps {add access = no; add foot = yes} [0x16 road_class=0 road_speed=0 resolution 23]
+highway=track [0x0a road_class=0 road_speed=1 resolution 23]
+highway=unsurfaced [0x0a road_class=0 road_speed=1 resolution 23]
+
+
+(railway=light_rail | railway=narrow_gauge | railway=preserved | railway=tram) {set railway=rail}
+railway=rail [0x14 resolution 17]
+
+waterway=canal | waterway=river [0x1f resolution 18]
+waterway=drain | waterway=stream [0x18 resolution 23]
+
+# Boundaries
+(admin_level=2 | admin_level=4) {set admin_level=6}
+boundary=administrative & admin_level=6 [0x1d resolution 16]

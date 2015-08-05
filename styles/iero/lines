@@ -1,0 +1,100 @@
+# -------------------------------------------------------------------
+# This is the default mkgmap style file for converting OSM ways
+# into Garmin lines.
+# Any line prefaced with # is a comment and will not be applied.
+# Each line is a rule, of the generalised format:
+#  OSM_tag(s)_to_match  [Garmin_type_code resolution]
+# See http://wiki.openstreetmap.org/wiki/Mkgmap/help/style_rules
+# and http://wiki.openstreetmap.org/wiki/Mkgmap/help/Custom_styles
+# for more information.
+
+#00 Coast
+
+natural=coastline [0x15 resolution 12]
+
+#01 Borders
+boundary=administrative { name '${mkgmap:boundary_name}' }
+boundary=administrative & admin_level<3 [0x1e resolution 16]
+boundary=administrative & admin_level<5 [0x1d resolution 19]
+boundary=administrative & admin_level<7 [0x1c resolution 21]
+boundary=administrative & admin_level<9 [0x1c resolution 22]
+boundary=administrative [0x1c resolution 22]
+boundary=national [0x1e resolution 17]
+boundary=political [0x1c resolution 19]
+
+#02 Hydro
+
+#03 Pistes 
+
+# Ponts et Gués
+bridge=yes [0x01 resolution 17]
+highway=ford [0x01 resolution 17]
+
+#----
+
+aeroway=runway [0x27 resolution 20]
+aeroway=taxiway [0x27 resolution 21]
+
+# Contours take their name from the elevation setting.
+contour=elevation & contour_ext=elevation_minor
+	{ name '${ele|conv:m=>ft}'; }
+	[0x20 resolution 22]
+contour=elevation & contour_ext=elevation_medium
+	{ name '${ele|conv:m=>ft}'; }
+	[0x21 resolution 20]
+contour=elevation & contour_ext=elevation_major
+	{ name '${ele|conv:m=>ft}'; }
+	[0x22 resolution 18]
+contour=elevation | contour_ext=elevation
+	{ name '${ele|conv:m=>ft}'; }
+	[0x21 resolution 18]
+
+# Set highway names to include the reference if there is one
+#highway=motorway {name '${ref|highway-symbol:hbox} ${name}' | '${ref|highway-symbol:hbox}' | '${name}' }
+#highway=trunk {name '${ref|highway-symbol:hbox} ${name}' | '${ref|highway-symbol:hbox}' | '${name}' }
+#highway=primary {name '${ref|highway-symbol:box} ${name}' | '${ref|highway-symbol:box}' | '${name}' }
+#highway=secondary {name '${ref|highway-symbol:oval} ${name}' | '${ref|highway-symbol:oval}' | '${name}' }
+#highway=* {name '${ref} ${name}' | '${ref}' | '${name}' }
+
+# Roundabouts
+junction=roundabout & highway=trunk [0x02 resolution 16]
+junction=roundabout & highway=primary [0x03 resolution 16]
+junction=roundabout & highway=secondary [0x03 resolution 18]
+junction=roundabout & highway=tertiary [0x05 resolution 18]
+junction=roundabout & highway=unclassified [0x05 resolution 22]
+junction=roundabout [0x05 resolution 21]
+
+# Ways sorted roughly
+highway=motorway | highway=motorway_link [0x01 resolution 16]
+highway=trunk | highway=trunk_link [0x02 resolution 16]
+highway=* & motorroad=yes [0x02 resolution 16]
+
+(highway=primary_link) {set highway=primary}
+highway=primary [0x03 resolution 16]
+(highway=secondary_link) {set highway=secondary}
+highway=secondary [0x04 resolution 18]
+(highway=tertiary | highway=tertiary_link | highway=unclassified | highway=living_street | highway=residential | highway=service | highway=road) {set highway=minor}
+#highway=minor [0x05 resolution 20]
+highway=minor [0x06 resolution 18]
+
+#[0x06 resolution 21]
+#[0x07 resolution 22]
+
+(highway=bridleway | highway=byway | highway=pedestrian | highway=cycleway | highway=footway | highway=steps) {set highway=path}
+highway=path [0x16 resolution 22]
+
+highway=track [0x0a resolution 20]
+highway=unsurfaced [0x0a resolution 21]
+
+(railway=light_rail | railway=narrow_gauge | railway=tram) {set railway=rail}
+railway=rail [0x14 resolution 16]
+
+route=ferry [0x1a resolution 16]
+
+man_made=seismic_line [0x20 resolution 24]
+
+power=line [0x29 resolution 24]
+
+#(waterway=canal | waterway=drain | waterway=stream) {set waterway=river}
+waterway=river [0x1f resolution 18]
+waterway=stream [0x18 resolution 20]

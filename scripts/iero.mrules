@@ -1,0 +1,1501 @@
+// iero rendering rules for Maperitive
+
+// Created by G. FABRE
+// Proprietary
+
+features
+	points, areas
+		postoffice : amenity=post_office
+		drinking water : amenity=drinking_water
+		tree : natural=tree
+		//bus stop : highway=bus_stop
+		railway station : railway=station
+		mini roundabout : highway=mini_roundabout
+		//TODO gate : barrier=gate
+		stade : leisure=pitch OR leisure=stadium
+		park : leisure=park
+		building : building=yes
+		marketplace : amenity=marketplace 
+	areas
+		beach : natural=beach
+//		water : natural=water OR waterway=riverbank OR //landuse=reservoir OR landuse=basin
+		water : natural=water
+		village green : landuse=village_green
+		forest : landuse=forest OR natural=wood
+		marais : wetland=swamp
+		farm : landuse=farm
+		grass : landuse=grass
+		plaine : natural=heath
+		fell : natural=fell
+		glacier : natural=glacier
+		national park : boundary=national_park
+		allotments : landuse=allotments
+		academic : node[@isOneOf(amenity, university, college, school)] area[@isOneOf(amenity, university, college, school)]
+		meadow : natural=meadow OR landuse=meadow
+		nature reserve : leisure=nature_reserve
+		playground : leisure=playground
+		car park: amenity=parking
+		track : leisure=track
+		graveyard : amenity=grave_yard OR landuse=cemetery
+		military : landuse=military OR military=barracks
+		leisure garden : leisure=garden
+		landuse retail : landuse=retail
+		landuse industrial : landuse=industrial
+		commercial area : landuse=commercial
+		residential area : landuse=residential
+		aeroway apron : aeroway=apron
+		aeroway terminal : aeroway=terminal
+
+		legendborder : @isMatch(legendborder, "yes")
+
+	lines
+		oneway : oneway=yes OR oneway=true OR oneway=-1
+		coastline : natural=coastline
+		river : waterway=river
+		lacs : natural=water 
+		stream : waterway=stream
+		canal : waterway=canal
+		drain : waterway=drain
+		railway rail : railway=rail
+		platform : railway=platform OR public_transport=platform
+		line barrier : barrier=wall OR barrier=fence
+		highway motorway : highway=motorway
+		highway motorway link : highway=motorway_link
+		highway trunk : highway=trunk
+		highway trunk link: highway=trunk_link
+		highway primary link : highway=primary_link
+		highway primary : highway=primary
+		highway secondary : highway=secondary
+		highway tertiary : highway=tertiary
+		highway unclassified : highway=unclassified
+		highway residential : highway=residential
+		highway living_street : highway=living_street
+		highway construction : highway=construction
+		highway service : highway=service
+		highway pedestrian : highway=pedestrian
+		highway track : highway=track
+		highway ford : highway=ford
+		highway footway : highway=footway
+		highway cycleway : highway=cycleway
+		highway path : highway=path
+		highway private : access=private AND highway
+		highway steps : highway=steps
+		historic citywalls : historic=citywalls OR historic=city_wall
+
+		aeroway runway : aeroway=runway
+		aeroway taxiway : aeroway=taxiway
+		
+		boundary country : boundary=administrative AND (admin_level=2 OR admin_level=4) AND NOT natural=coastline
+		boundary province : boundary=administrative AND admin_level=6
+		boundary municipal : boundary=administrative AND admin_level=8
+		
+		contour major : contour[@isMulti(elevation, 50)]
+		contour minor : contour[@isMulti(elevation, 10) and not @isMulti(elevation, 50)]
+
+		//specific
+		seismic : man_made=seismic_line
+		gps : @isMatch(source, ".*GPS.*")
+		
+// Routes
+//		route ncn : relation[type=route AND route=bicycle AND network=ncn]
+		route byway : relation[type=route AND route=bicycle AND network="National Byway"]
+		route foot : relation[type=route AND route=foot]
+		
+	points
+		// Airport
+		airport : aeroway=aerodrome or amenity=airport
+		//TODO helipad : aeroway=helipad
+
+		// Car
+		fuel : amenity=fuel
+		rental : amenity=car_rental
+		parking : amenity=parking
+		car_repair : shop=car_repair
+
+		// Villages
+		place city : place=city
+		place town : place=town
+		place village : place=village
+		place hamlet : place=hamlet
+		place suburb : place=suburb
+
+		// Money
+		bank : amenity=bank or amenity=atm or atm=yes
+
+		// Health
+		hospital : amenity=hospital
+		pharmacy : amenity=pharmacy
+
+		hair dresser : shop=hairdresser
+
+		// Hotels et restos
+		tourism hotel : tourism=hotel OR tourism=hostel OR tourism=guest_house OR tourism=motel
+		restaurant : amenity=restaurant
+		cafe : amenity=cafe OR amenity=pub OR amenity=bar
+		nightclub : amenity=nightclub
+		
+		// Food
+		fruits_et_legumes : amenity=food_court OR shop=organic
+		supermarket : shop=supermarket OR shop=variety_store
+		bakery : shop=bakery
+		alcohol : shop=alcohol
+		butcher : shop=butcher
+		fish : shop=seafood
+		artisans : shop=artisans
+
+		// Achats
+		library : amenity=library or shop=books
+		diy : shop=doityourself OR shop=hardware
+		electronics : shop=electronics
+		fabrics : shop=fabrics OR shop=tailor
+		artisans : shop=furniture
+
+		peak : natural=peak
+
+		tourism viewpoint : tourism=viewpoint
+		tourism museum : tourism=museum
+
+		// Special places
+		building : building=yes
+		embassy : amenity=embassy
+		mairie : amenity=townhall OR amenity=public_building
+		theatre : amenity=theatre
+		travel : shop=travel_agency
+
+		school : amenity=school or amenity=college 
+		kindergarten : amenity=kindergarten
+
+		police station : amenity=police
+		fire station : amenity=fire_station
+
+		church : amenity=place_of_worship AND religion=christian
+		graveyard : amenity=grave_yard OR landuse=cemetery
+		
+		dock : waterway=dock
+		fall : waterway=waterfall
+
+	// specific
+		campement : place=isolated_dwelling
+		information : information=guidepost OR information=office OR tourism=information
+		tower : man_made=tower
+		well : man_made=well
+		quary : landuse=quarry
+		works : man_made=works OR office=administrative OR office=company
+
+		legend : @isMatch(legend, "yes")
+properties
+	map-background-color	: white
+	map-background-opacity	: 1
+	//map-sea-color : #B5D0D0
+	map-sea-color : white
+	//font-weight : bold
+	//font-family : Garamond
+	font-family : Calibri
+	text-max-width : 7
+	text-halo-width : 25%
+	text-halo-opacity : 0.75
+	text-align-horizontal : center
+	text-align-vertical : center
+	font-stretch : 0.9
+	map.rendering.lflp.min-buffer-space : 5
+	map.rendering.lflp.max-allowed-corner-angle : 40
+	
+rules
+	
+	target : $featuretype(point)
+		if : place*
+			define
+				font-weight : bold
+	
+			if : *city
+				define
+					font-size : 6:8;14:20
+					min-zoom : 6
+					max-zoom : 14
+			elseif : *town
+				define
+					font-size : 9:8;12:10;20:20
+					min-zoom : 9
+			elseif : *village
+				define
+					//font-size : 12:10;20:20
+					font-size : 10:7;12:10;20:20
+					//min-zoom : 12
+					min-zoom : 10.5
+			elseif : *hamlet
+				define
+					font-size : 14:8;20:16
+					min-zoom : 14
+			elseif : *suburb
+				define
+					font-size : 13:10;20:20
+					min-zoom : 13
+					text-color : white black 50%
+			draw : text
+
+	target : playground
+		define
+			fill-color : #CCFEF0
+			line-style : none
+		draw : fill
+		define
+			line-color : #ADCCB5
+			line-width : 1
+		draw : line
+		define
+			min-zoom : 17
+		draw : text
+
+	target : $featuretype(area)
+		define
+			line-style : none
+			line-width : 1
+		if : forest
+			define
+				min-zoom : 9
+				font-size : 10:7;12:10
+				text-color : #1C8706
+			draw : text
+			define
+				min-zoom : 9
+				fill-color : #8DC56C
+				fill-opacity : 0.5
+		elseif : marais 
+			define
+				min-zoom : 9
+				font-size : 10:7;12:10
+				text-color : #62829C 
+				//text-offset-vertical : 150%
+			draw : text
+			define
+				min-zoom : 9
+				fill-color : #DCD9D7
+				fill-opacity : 0.5
+		elseif : beach
+			define
+				min-zoom : 15 
+				font-size : 10:7;12:10
+				text-color : #877A06
+			draw : text
+			define
+				min-zoom : 10
+				fill-color : #FEFEC0
+		elseif : farm
+			define
+				min-zoom : 9
+				fill-color : #E9D8BD
+		elseif : fell
+			define
+				fill-color : #C5FF5B black 10%
+		elseif : water
+			define
+				min-zoom : 9
+				text-color : #2B80FE
+				//text-offset-vertical : 150%
+				font-size : 10:7;12:10
+			draw : text
+			define
+				fill-color : #B5D0D0
+		elseif : residential area
+			define
+				fill-color : #DCDCDC
+		elseif : grass
+			define
+				fill-color : #ACA863
+				fill-opacity : 0.5
+		elseif : plaine 
+			define
+				fill-color : #CFECA8
+		elseif : allotments
+			define
+				fill-color : #C8B084
+		elseif : meadow
+			define
+				fill-color : #CFECA8
+		elseif : nature reserve
+			define
+				min-zoom : 9
+				font-size : 10:7;12:10
+				text-color : #ABDE96
+			draw : text
+			define
+				fill-color : #ABDE96
+				fill-opacity : 0.2
+				line-color : #127A09
+				line-width : 3 
+				line-style : dash
+		elseif : car park
+			define
+				fill-color : #F6EEB7
+		elseif : park
+			define
+				fill-color : #C0F6B0
+		elseif : leisure garden
+			define
+				fill-color : #CFECA8
+		elseif : graveyard
+			define
+				fill-color : #A9CAAE
+		elseif : building
+			define
+				fill-color : #BCA9A9
+		elseif : stade 
+			define
+				fill-color : #288420
+				fill-opacity : 0.3
+		//elseif : track
+		//	define
+		//		fill-color : #74DCBA
+		elseif : village green
+			define
+				fill-color : #CFECA8
+		elseif : landuse retail
+			define
+				fill-color : #F0D9D9
+				line-color : #F4A19E
+			draw : line
+		elseif : landuse industrial
+			define
+				min-zoom : 12 
+				font-size : 10:7;12:10
+				text-color : #939393
+			draw : text
+			define
+				fill-color : #DFD1D6
+		elseif : commercial area
+			define
+				fill-color : #EFC8C8
+		elseif : military
+			define
+				fill-color : #FE9898
+		elseif : aeroway*
+			define
+				fill-color : #E9D1FE
+		elseif : glacier
+			define
+				fill-color : #DDECEC
+				line-style : dash
+				line-color : #DDECEC black 10%
+		else
+			stop
+		draw : fill
+		define
+			min-zoom : 17
+		draw : text
+
+//		aeroway taxiway : aeroway=taxiway
+//		aeroway apron : aeroway=apron
+//		aeroway terminal : aeroway=terminal
+		
+	target : aeroway runway
+		define
+			min-zoom : 11
+			line-color : #BBBBCC
+			line-width : 11:2;15:20
+		draw : line
+		
+	target : aeroway taxiway
+		define
+			min-zoom : 11
+			line-color : #BBBBCC
+			line-width : 11:1;15:6
+		draw : line
+		
+	target : glacier
+		define
+			min-zoom : 10
+			text-color : #A3A3FE
+		draw : text
+
+	target : academic
+		define
+			fill-color : #F0F0D8
+			line-style : none
+		draw : fill
+		define
+			line-color : #E5D2CC
+			line-width : 1
+		draw : line
+//		draw : text
+			
+	target : boundary*
+		define
+			line-color : #9E1A99 
+			line-opacity : 0.5
+		if : boundary country
+			define
+				line-width : 6:1;9:3;10:6
+		elseif : boundary province
+			define
+				min-zoom : 4
+				line-width : 4:1;11:3
+				line-style : dash
+		elseif : boundary municipal
+			define
+				min-zoom : 12
+				line-width : 12:1;14:2
+				line-style : dash
+		draw : line
+
+	target : legend
+		define
+			fill-color : gray
+			line-style : solid
+		draw : line
+
+	target : national park
+		define
+			fill-color : #8DC56C
+			fill-opacity : 0.1
+			//line-style : none
+			line-style : solid
+		draw : fill
+		define
+			line-color : #008C2A
+			line-width : 3
+			line-style : solid
+			font-size : 3:3;12:12
+			text-color : green
+			font-weight : normal
+		draw : line
+		draw : text
+
+	target : peak
+		define
+			shape : triangle
+			shape-size : 12
+			fill-color : #D08F55
+			line-style : none
+			min-zoom : 11
+		draw : shape
+		define
+			text : @if(name, name @if(ele, "\n(" ele ")"), ele)
+			text-color : #ae4242
+			min-zoom : 10
+			font-size : 10
+			text-max-width : 10
+			text-offset-vertical : 100%
+			text-align-vertical : near
+		draw : text
+
+	target : platform
+		define
+			min-zoom : 13
+			line-color : gray
+			line-width : 3
+		draw : line
+	target : railway rail
+		define
+			min-zoom : 6
+			//max-zoom : 14
+			line-style : dashlong
+			line-color : white
+			//line-width : 3
+			line-width : 11:2;12:2;15:6;18:7
+			border-style : solid
+			border-color : #000
+			border-width : 25%
+		draw : line
+
+	target : highway private
+		define
+			min-zoom : 15
+			line-width : 4
+			line-style : dash
+			line-color : #F7D4D4
+		draw : line
+
+	target : highway*
+		define
+			//font-size : 15:7;18:10
+			font-size : 15:6;18:9
+			font-weight : bold
+	
+		for : oneway=yes OR oneway=true
+			define 
+				min-zoom : 15
+				shape : custom
+				shape-def : 60,0,20,-40,20,-15,-60,-15,-60,15,20,15,20,40;Z
+				shape-size : 12
+				shape-aspect : 0.75
+				shape-spacing : 6
+				fill-color : #6C70D4
+				line-style : none
+			for : oneway=-1
+				define
+					angle : 180
+			draw : shape 
+		
+		define
+			line-style : solid
+			line-join : round
+			line-start-cap : round
+			line-end-cap : round
+	
+		if : *motorway*
+			if : *link
+				define
+					line-width : 7:1;12:3;13:4;16:5;18:6
+			else
+				define
+					line-width : 7:1;9:2;12:3;13:7;16:10;18:12
+			define
+				min-zoom : 12
+				line-color : #849BBD
+				border-style : solid
+				border-color : #849BBD black 20%
+				border-width : 15%				
+			draw : line
+			define
+				min-zoom : 7
+				max-zoom : 12
+				border-style : none
+			draw : line
+			define
+				min-zoom : 10
+				max-zoom : 20
+				font-family : Tahoma
+				text-align-horizontal : center
+				text-align-vertical : center
+				text : ref
+				font-size : 12
+				text-color : #fcfcfb
+				text-halo-width : 0
+				shape : custom
+				shape-def : p:#809bc0;pw:5;f:#809bc0;m:-10,-10;l:10,-10;a:10,10,10,10;l:-10,10;a:10,10,-10,-10;z;p:#fcfcfb;pw:2;m:-10,-10;l:10,-10;a:10,10,10,10;l:-10,10;a:10,10,-10,-10;z
+				shield-padding-left : 5
+				shield-padding-right : 5
+				shield-padding-top : 7
+				shield-padding-bottom : 7
+				shield-resize-mode : free
+			draw : shield			
+		elseif : *trunk*
+			define
+				//min-zoom : 12
+				line-color : #96D296
+				line-width : 11:2;13:3;15:11;18:13
+				border-style : dash 
+				border-color : #96D296 black 20%
+				border-width : 15%
+			for : @isMatch(source, ".*GPS.*")
+				define
+					border-style : solid
+			draw : line
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+			for : bridge=yes
+				define
+					border-width : 70%
+					border-style : solid
+					border-color : black
+					//line-color : black
+					//line-start-cap : none
+					//line-end-cap : none
+				draw : line
+			define
+				min-zoom : 7
+				max-zoom : 12
+				border-style : none
+			draw : line
+		elseif : *primary*
+			define
+				min-zoom : 11
+				line-color : #ECA2A3
+				line-width : 11:2;12:2;15:6;18:7
+				border-style : dash 
+				border-color : #ECA2A3 black 20%
+				border-width : 15%
+			for : @isMatch(source, ".*GPS.*")
+				define
+					border-style : solid
+					//line-style : solid
+			draw : line
+			for : @isMatch(source, ".*GPS.*")
+				define
+					border-style : solid
+			draw : line
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+			for : bridge=yes
+				define
+					border-width : 70%
+					border-style : solid
+					border-color : black
+					//line-color : black
+					//line-start-cap : none
+					//line-end-cap : none
+				draw : line
+			for : ford=yes
+				define
+					border-color : black
+					border-style : dot
+				draw : line
+			define
+				min-zoom : 7
+				max-zoom : 11
+				border-style : none
+			draw : line
+			define
+				min-zoom : 13
+				max-zoom : 20
+			draw : text
+		elseif : *secondary
+			define
+				min-zoom : 11
+				line-color : #FDD6A4
+				line-width : 10:1;11:2;13:2;15:6;18:7
+				//line-style : dash
+				border-style : dash
+				border-color : #CAA36F black 20%
+				border-width : 15%
+			for : @isMatch(source, ".*GPS.*")
+				define
+					border-style : solid
+					//line-style : solid
+			draw : line
+			for : tunnel=yes
+				define
+					border-color : black
+					border-style : dot
+			draw : line
+			for : bridge=yes
+				define
+					border-width : 70%
+					border-style : solid
+					border-color : black
+					//line-color : black
+					//line-start-cap : none
+					//line-end-cap : none
+				draw : line
+			//for : bridge=yes
+			//	define
+			//		line-color : black
+			//		line-width : 2
+			//		min-zoom : 9
+			//		shape-mode : linear
+			//		shape : custom
+			//		shape-def :  l: 0,-5; 0,5; m:8,0;
+			//		//shape-spacing : 1.0
+			//	draw : shape
+			//define
+			//	min-zoom : 8.5
+			//	max-zoom : 12
+			//	border-style : none
+			//draw : line
+			for : ford=yes
+				define
+					border-color : black
+					border-style : dot
+			draw : line
+
+			define
+				min-zoom : 13
+				max-zoom : 20
+			draw : text
+		elseif : *tertiary
+			define
+				min-zoom : 9
+				line-color : #fffd8b
+				line-width : 10:1;13:2;15:6;18:7
+				//line-style : dash
+				border-style : dash
+				border-color : #C1AF75 black 20%
+				border-width : 15%
+			for : @isMatch(source, ".*GPS.*")
+				define
+					border-style : solid
+					//line-style : solid
+			draw : line
+			for : bridge=yes
+				define
+					border-width : 70%
+					border-style : solid
+					border-color : black
+					//line-color : black
+					//line-start-cap : none
+					//line-end-cap : none
+				draw : line
+			for : ford=yes
+				define
+					border-color : black
+					border-style : dot
+				draw : line
+			define
+				min-zoom : 15
+				max-zoom : 20
+			draw : text
+
+		elseif : *service
+			define
+				min-zoom : 13
+				line-color : white
+				line-width : 7:0.6;9:1;10:1.2;12:2.5;13:3;16:5;18:6
+				border-style : solid
+				border-color : #FEFEB2 black 20%
+				border-width : 15%
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+		elseif : *pedestrian
+			define
+				min-zoom : 13
+				line-color : #EDEDED
+				line-width : 7:0.6;9:1;10:1.2;12:2.5;13:3;16:5;18:6
+				border-style : solid
+				border-color : #B1B1B1 black 20%
+				border-width : 15%
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+
+		elseif : $regex("(.*residential)|(.*unclassified)")
+			define
+				min-zoom : 13
+				line-color : white
+				//line-width : 12:1;13:1.5;15:6;18:7
+				line-width : 7:0.6;9:1;10:1.2;12:2.5;13:3;16:5;18:6
+				border-style : solid
+				border-style : solid
+				border-color : white black 50%
+				border-width : 20%
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+			define
+				min-zoom : 10
+				max-zoom : 13
+				border-style : none
+				line-color : white black 25%
+			draw : line
+			define
+				min-zoom : 15
+				max-zoom : 20
+			draw : text
+		elseif : *living_street
+			define
+				min-zoom : 13
+				line-color : white black 10%
+				line-width : 12:1;18:12
+				border-style : solid
+				border-color : white black 50%
+				border-width : 20%
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+			define
+				min-zoom : 10
+				max-zoom : 13
+				border-style : none
+				line-color : white black 25%
+			draw : line
+			define
+				min-zoom : 15
+				max-zoom : 20
+			draw : text
+		elseif : *construction
+			define
+				min-zoom : 13
+				line-color : white yellow 60%
+				line-width : 12:1;18:12
+				line-style : dot
+				border-style : solid
+				border-color : white black 30%
+				border-width : 20%
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+			define
+				min-zoom : 10
+				max-zoom : 13
+				border-style : none
+				line-color : white black 25%
+			draw : line
+			define
+				min-zoom : 15
+				max-zoom : 20
+			draw : text
+		elseif : *track
+			define
+				min-zoom : 9.5
+				line-width : 10:1;13:1;15:5;18:6
+				line-style : solid
+				border-style : dash
+				line-color : #CE991E
+				border-width : 15%
+ 				border-color : #A57B18 black 20%
+				//border-opacity : 0.3
+			for : @isMatch(source, ".*GPS.*")
+				define
+					//line-color : #9d7517
+					border-style : solid
+			draw : line
+			for : bridge=yes
+				define
+					border-width : 80%
+					border-style : solid
+					border-color : black
+				draw : line
+			for : ford=yes
+				define
+					border-style : dot
+					border-color : black
+				draw : line
+
+		elseif : *footway
+			define	
+				min-zoom : 10
+				line-color : green
+				line-width : 1.5
+				line-style : dot
+				border-style : solid
+				border-color : white
+				border-width : 100%
+				border-opacity : 0.3
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+			draw : text		
+		elseif : *cycleway
+			define	
+				min-zoom : 13
+				line-color : blue
+				line-width : 1.5
+				line-style : dot
+				border-style : solid
+				border-color : white
+				border-width : 100%
+				border-opacity : 0.3
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+		elseif : *path
+			define	
+				min-zoom : 13
+				line-color : #6E7C6D
+				line-width : 1.5
+				line-style : dash
+				border-style : solid
+				border-color : white
+				border-width : 100%
+				border-opacity : 0.3
+			for : tunnel=yes
+				define
+					border-style : dot
+			draw : line
+		else
+			stop
+
+	target : highway steps
+		define
+			min-zoom : 16
+			shape : custom
+			shape-def : -1,1, -1,-1, 1,-1, 1,1;Z
+			shape-spacing : 2
+			shape-size : 16:1;20:3
+			shape-aspect : 3
+			fill-color : #F98072
+			line-style : none
+		draw : shape
+
+	target : line barrier
+		define
+			min-zoom : 13
+			line-color : black
+			line-width : 1
+		draw : line
+
+	target : historic citywalls
+		define
+			min-zoom : 13
+			line-color : #8D968D
+			line-width : 7:0.6;9:1;10:1.2;12:2.5;13:3;16:10
+		draw : line
+		draw : text
+
+		define
+
+	target : river
+		define
+			line-color : #B5D0D0
+			line-width : 7:1;12:1;14:5
+		draw : line		
+		define
+			min-zoom : 9
+			text-color : #84AEBF
+			text-offset-vertical : -50%
+			font-size : 10:8;12:11
+			font-style : italic
+		draw : text
+
+	target : lacs
+		define
+			line-color : #B5D0D0
+			line-width : 7:1;12:2;14:5
+		draw : line
+		//define
+		//	font-size : 3:3;12:12
+		//	font-weight : bold
+		//draw : text
+
+	target : canal
+		define
+			min-zoom : 12
+			line-color : #B5D0D0
+			line-width : 12:1;17:8
+		draw : line
+		
+	target : drain
+		define
+			min-zoom : 13
+			line-color : #B5D0D0
+			line-width : 1
+		draw : line		
+	target : stream
+		define
+			min-zoom : 13
+			line-color : #B5D0D0
+			line-width : 13:1;15:2
+		draw : line
+
+	target : seismic
+		define
+			min-zoom : 12
+			line-color : #BFC0C0
+			line-width : 1
+		draw : line
+		define
+			min-zoom : 9
+			text-color : #BFC0C0
+			text-offset-vertical : 50%
+			font-size : 10:7;12:10
+		draw : text
+
+// Waypoints
+
+	// At big scale
+	target: airport
+		define
+			icon-image : icons/SJJB/png/transport_airport.glow.32.png
+			min-zoom : 9
+			icon-width : 16
+		draw : icon
+	target: tower
+		define
+			icon-image : icons/SJJB/png/poi_tower_communications.glow.32.png
+			min-zoom : 9
+			icon-width : 16
+		draw : icon
+	target: well
+		define
+			icon-image : icons/SJJB/rig.png
+			min-zoom : 9
+			icon-width : 16
+		draw : icon
+		define
+			min-zoom : 12
+			text-color : #ABABAB
+			text-offset-vertical : 120%
+			font-size : 10:7;12:10
+		draw : text
+	target: quarry 
+		define
+			icon-image : icons/SJJB/png/poi_mine.glow.32.png
+			min-zoom : 9
+			icon-width : 13
+		draw : icon
+
+	target: fuel
+		define
+			icon-image : icons/SJJB/png/transport_fuel.p.32.png
+			min-zoom : 9
+			icon-width : 16 
+		draw : icon
+		define
+			min-zoom : 15
+			text-color : #C565DB
+			text-offset-vertical : 120%
+			font-size : 6
+		draw : text
+
+	// At smaller scale
+	target : building
+		// icon
+		define
+			icon-width : 13
+			min-zoom : 15
+		if : NOT @isoneof(type,residence,villa)
+			define
+				icon-image : icons/SJJB/png/shopping_estateagent3.glow.32.png
+		for : @isMatch(type, "residence")
+			define
+				icon-image : icons/SJJB/immeuble.png
+		for : @isMatch(type, "villa")
+			define
+				icon-image : icons/SJJB/maison.png
+		draw : icon
+
+		// text
+		define
+			min-zoom : 15
+			text-offset-vertical : 120%
+		if : NOT @isoneof(type,residence,villa)
+			define
+				text-color : #37861A
+				font-size : 6
+		for : @isMatch(type, "residence")
+			define
+				text-color : #1C38DC
+				font-size : 6
+		for : @isMatch(type, "villa")
+			define
+				text-color : #1C38DC
+				font-size : 6
+		draw : text
+	target: parking
+		define
+			icon-image : icons/SJJB/png/transport_parking.glow.32.png
+			min-zoom : 15
+			icon-width : 13
+		draw : icon
+	target: park
+		define
+			icon-image : icons/SJJB/png/accommodation_alpinehut.glow.32.png
+			min-zoom : 13
+			icon-width : 12
+		draw : icon
+	target: stade
+		define
+			icon-image : icons/SJJB/png/sport_soccer.glow.32.png
+			min-zoom : 13
+			icon-width : 13
+		draw : icon
+		define
+			min-zoom : 14
+			text-color : #3EB54C
+			text-offset-vertical : 150%
+		draw : text
+	target: surf 
+		define
+			icon-image : icons/SJJB/png/sport_windsurfing.glow.32.png
+			min-zoom : 13
+			icon-width : 13
+		draw : icon
+	target: rental
+		define
+			icon-image : icons/SJJB/png/transport_rental_car.glow.32.png
+			min-zoom : 15
+			icon-width : 14
+		draw : icon
+	target: car_repair
+		define
+			icon-image : icons/SJJB/png/shopping_car_repair.glow.32.png
+			min-zoom : 15
+			icon-width : 14
+		draw : icon
+		define
+			min-zoom : 14
+			text-color : #2B80FE
+			text-offset-vertical : 150%
+		draw : text
+	//target: bus stop
+	//	define
+	//		icon-image : icons/SJJB/png/transport_bus_stop.glow.32.png
+	//		min-zoom : 15
+	//		icon-width : 16
+	//	draw : icon
+	target: railway station
+		define
+			icon-image : icons/SJJB/png/transport_train_station.glow.32.png
+			min-zoom : 15
+			icon-width : 16
+		draw : icon
+	target: information 
+		define
+			icon-image : icons/SJJB/png/poi_place_city.glow.32.png
+			min-zoom : 16
+			icon-width : 14
+		draw : icon
+	target: postoffice
+		define
+			icon-image : icons/SJJB/png/amenity_post_office.glow.32.png
+			min-zoom : 16
+			icon-width : 12
+		draw : icon
+
+	target: fire station
+		define
+			icon-image : icons/SJJB/png/amenity_firestation.glow.32.png
+			min-zoom : 16
+			icon-width : 16
+		draw : icon				
+	target: hospital
+		define
+			icon-image : icons/SJJB/png/health_hospital.glow.32.png
+			min-zoom : 15
+			icon-width : 16
+		draw : icon
+		define
+			min-zoom : 14
+			text-color : #DC0C10
+			text-offset-vertical : 150%
+		draw : text
+	target: police station
+		define
+			icon-image : icons/SJJB/png/amenity_police.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+	target: cafe
+		define
+			icon-image : icons/SJJB/png/food_cafe.glow.32.png
+			min-zoom : 15
+			icon-width : 16
+		draw : icon
+		define
+			min-zoom : 15
+			text-offset-vertical : 120%
+		draw : text
+	target: fruits_et_legumes 
+		define
+			icon-image : icons/SJJB/png/shopping_greengrocer.glow.32.png
+			min-zoom : 15
+			icon-width : 14
+		draw : icon
+	target: graveyard
+		define
+			icon-image : icons/SJJB/png/tourist_memorial.glow.32.png
+			min-zoom : 15
+			icon-width : 14
+		draw : icon
+	target: supermarket
+		define
+			icon-image : icons/SJJB/png/shopping_supermarket.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+		define
+			text-offset-vertical : 120%
+		draw : text
+	target: marketplace
+		define
+			icon-image : icons/SJJB/png/shopping_convenience.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+	target: diy
+		define
+			icon-image : icons/SJJB/png/shopping_diy.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+		define
+			text-offset-vertical : 120%
+		draw : text
+
+	target: mini roundabout
+		define
+			icon-image : icons/SJJB/png/transport_roundabout_anticlockwise.glow.32.png
+			min-zoom : 16
+			icon-width : 9
+		draw : icon
+	target: church
+		define
+			icon-image : icons/SJJB/png/place_of_worship_christian3.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+		//define
+		//	text-offset-vertical : 150%
+		//draw : text
+	target: drinking water
+		define
+			icon-image : icons/SJJB/png/food_drinkingtap.glow.32.png
+			min-zoom : 16
+			icon-width : 16
+		draw : icon
+	target: bank
+		//define
+		//	min-zoom : 14
+		//	text-color : #2B80FE
+		//	text-offset-vertical : 150%
+		//draw : text
+		define
+			icon-image : icons/SJJB/png/money_bank2.glow.32.png
+			min-zoom : 16
+			icon-width : 12
+		draw : icon
+	target: campement
+		define
+			min-zoom : 10
+			text-color : #2B80FE
+			text-offset-vertical : 150%
+		draw : text
+		define
+			icon-image : icons/SJJB/png/accommodation_youth_hostel.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+	target: works 
+		define
+			min-zoom : 14
+			text-color : black
+			text-offset-vertical : 120%
+		draw : text
+		define
+			icon-image : icons/SJJB/factory3D.png
+			min-zoom : 14
+			icon-width : 14
+		draw : icon
+	target: restaurant
+		define
+			min-zoom : 14
+			text-color : #9E7226 
+			text-offset-vertical : 120%
+		draw : text
+		define
+			icon-image : icons/SJJB/png/food_restaurant.glow.32.png
+			min-zoom : 16
+			icon-width : 13
+		draw : icon
+	target: fabrics
+		define
+			icon-image : icons/SJJB/png/shopping_clothes.glow.32.png
+			min-zoom : 16
+			icon-width : 13
+		draw : icon
+	target: artisans
+		define
+			min-zoom : 14
+			text-color : #C565DB
+			text-offset-vertical : 130%
+		draw : text
+		define
+			icon-image : icons/SJJB/png/shopping_gift.glow.32.png
+			min-zoom : 16
+			icon-width : 13
+		draw : icon
+	target: electronics
+		define
+			icon-image : icons/SJJB/png/shopping_laundrette.glow.32.png
+			min-zoom : 16
+			icon-width : 12
+		draw : icon
+	target: pharmacy
+		define
+			icon-image : icons/SJJB/png/health_pharmacy.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+	target: library
+		define
+			icon-image : icons/SJJB/png/amenity_library.glow.32.png
+			min-zoom : 16
+			icon-width : 16
+		draw : icon
+	target: bakery
+		define
+			min-zoom : 14
+			text-color : #C565DB
+			text-offset-vertical : 120%
+		draw : text
+		define
+			icon-image : icons/SJJB/png/shopping_bakery.glow.32.png
+			min-zoom : 16
+			icon-width : 16
+		draw : icon
+	target: butcher
+		define
+			min-zoom : 14
+			text-color : #C565DB
+			text-offset-vertical : 120%
+		draw : text
+		define
+			icon-image : icons/SJJB/png/shopping_butcher.glow.32.png
+			min-zoom : 16
+			icon-width : 16
+		draw : icon
+	target: fish 
+		define
+			min-zoom : 14
+			text-color : #C565DB
+			text-offset-vertical : 120%
+		draw : text
+		define
+			icon-image : icons/SJJB/png/shopping_fish.glow.32.png
+			min-zoom : 16
+			icon-width : 16
+		draw : icon
+	target: alcohol 
+		define
+			icon-image : icons/SJJB/png/shopping_alcohol.glow.32.png
+			min-zoom : 16
+			icon-width : 16
+		draw : icon
+	target: tree
+		define
+			icon-image : icons/SJJB/png/landuse_coniferous.glow.32.png
+			min-zoom : 14
+			icon-width : 6
+		draw : icon
+	//target: travel
+	//	define
+	//		icon-image : icons/SJJB/png/transport_bus_stop.glow.32.png
+	//		min-zoom : 14
+	//		icon-width : 10
+	//	draw : icon
+	target: school
+		define
+			icon-image : icons/SJJB/schoolbus.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+		define
+			text-color : #3EB54C
+			text-offset-vertical : 150%
+		draw : text
+	target: kindergarten
+		define
+			icon-image : icons/SJJB/png/education_nursery.glow.32.png
+			min-zoom : 14
+			icon-width : 16
+		draw : icon
+		define
+			text-color : #3EB54C
+			text-offset-vertical : 150%
+		draw : text
+	target: embassy 
+		define
+			icon-image : icons/SJJB/png/poi_embassy2.glow.32.png
+			min-zoom : 14
+			icon-width : 14
+		draw : icon
+		define
+			text-offset-vertical : 150%
+		draw : text
+	target: mairie 
+		define
+			icon-image : icons/SJJB/png/tourist_museum.glow.32.png
+			min-zoom : 14
+			icon-width : 14
+		draw : icon
+	target: theatre 
+		define
+			icon-image : icons/SJJB/png/tourist_theatre.glow.32.png
+			min-zoom : 14
+			icon-width : 13
+		draw : icon
+	target: dock 
+		define
+			icon-image : icons/SJJB/png/transport_port.glow.32.png
+			min-zoom : 14
+			icon-width : 13
+		draw : icon
+	target: fall 
+		define
+			icon-image : icons/SJJB/png/tourist_fountain.glow.32.png
+			min-zoom : 9
+			icon-width : 16
+		draw : icon
+		define
+			min-zoom : 12
+			text-color : blue
+			text-offset-vertical : 120%
+			font-size : 10:7;12:10
+		draw : text
+	//target : gate
+	//	define
+	//		icon-image : http://svn.openstreetmap.org/applications/rendering/mapnik/symbols/gate2.png
+	//		min-zoom : 14
+	//		icon-width : 7
+	//	draw : icon
+	target : legend
+		define
+			text-color : black
+			font-size : 10:6;11:7;12:9
+		draw : text
+
+	target : tourism*
+		define
+			min-zoom : 15
+			text-color : #2B80FE
+			text-offset-vertical : 120%
+		draw : text
+		if : *hotel
+			define
+				icon-image : icons/SJJB/png/accommodation_hotel2.glow.32.png
+				min-zoom : 15
+				icon-width : 16
+
+		elseif : *viewpoint
+			//define
+			//	min-zoom : 9
+			//	text-color : #2B80FE
+			//	text-offset-vertical : 150%
+			//draw : text
+			define
+				icon-image : icons/SJJB/png/tourist_view_point.p.32.png
+				min-zoom : 9
+				icon-width : 12
+
+		elseif : *museum
+			define
+				icon-image : icons/SJJB/png/tourist_museum.glow.32.png
+				min-zoom : 16
+				icon-width : 16
+		else
+			stop
+		draw : icon
+
+	target : amenity*
+		define
+			min-zoom : 14
+			text-color : #9E7226 
+		draw : text
+
+		define
+			min-zoom : 14
+			icon-width : 16
+		if : *pub
+			define
+				icon-image : icons/SJJB/png/food_pub.glow.32.png
+		elseif : *nightclub
+			define
+				icon-image : icons/SJJB/png/food_bar.glow.32.png
+		else
+			stop
+		draw : icon
+
+
+	target: contour*
+		define
+			line-color : #7f3300
+			line-opacity : 0.35
+			curved : true
+		if : *major
+			define
+				min-zoom : 9
+				line-width : 11:0.1;11.9:1;12:2
+		else
+			define
+				min-zoom : 12
+				line-width : 1
+		draw : contour
+		
+	target: coastline
+		define
+			line-color : #B5D0D0
+			line-width : 2
+		draw : line
+
+
